@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import './style.css'
+import axios from 'axios'
 export function GenerateOtp(){
     const [mobilenumber,setmobilenumber]=useState('')
     const [error,seterror]=useState('')
@@ -17,14 +18,9 @@ export function GenerateOtp(){
         }
         try{
             const api="https://cdn-api.co-vin.in/api/v2/auth/public/generateOTP"
-        const senddata=await fetch(api,{
-            method:'POST',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify({mobile:Number(mobilenumber)})
-        })
-        if(senddata.ok){
+        const senddata=await axios.post(api,{mobile:Number(mobilenumber)})
+        console.log(senddata)
+        if(senddata.status===200){
             setsuccess('your otp is successfully send in your moble number')
             setmobilenumber('')
         }
